@@ -6,7 +6,7 @@ import ast
 
 
 class DBConnection:
-    mongo_info = 'mongodb://localhost:27017/'
+    mongo_info = 'mongodb://52.47.186.217:27017/'
     db_name = 'verificacion'
     query_result = []
     indice = 0
