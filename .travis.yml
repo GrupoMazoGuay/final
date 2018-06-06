@@ -7,6 +7,8 @@ install:
   - easy_install nose
 
 before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - "nohup python code/application.py &"
   - "sleep 5"
 

@@ -15,7 +15,8 @@ def before_all():
 
     is_travis = 'TRAVIS' in os.environ
     if is_travis:
-        world.driver = webdriver.Firefox()
+        world.driver = webdriver.Firefox(
+            executable_path="/usr/local/bin/geckodriver")
         world.driver.get("http://localhost:8080/")
     else:
         world.driver = webdriver.Chrome('/usr/local/bin/chromedriver')
