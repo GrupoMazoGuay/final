@@ -3,12 +3,12 @@ python:
   - '2.7'
 
 install:
-  - venv/bin/pip install -r requirements.txt
-  - venv/bin/easy_install nose
+  - pip install -r requirements.txt
+  - easy_install nose
 
 before_script:
-    - "nohup python code/application.py &"
-    - "sleep 10"
+  - "nohup python code/application.py &"
+  - "sleep 10"
 
 script:
   - make test
