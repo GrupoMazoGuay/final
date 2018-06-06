@@ -1,3 +1,4 @@
+
 Feature: User introduces text in text box
 
   Scenario: User introduces URL
