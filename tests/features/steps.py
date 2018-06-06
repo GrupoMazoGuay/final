@@ -19,7 +19,7 @@ def before_all():
         world.driver = getattr(webdriver, browser_nm)()
     else:
         world.driver = webdriver.Chrome('/usr/local/bin/chromedriver')
-        world.driver.get("http://52.47.186.217:8080/")
+        world.driver.get("http://localhost:8080/")
 
 
 @after.all

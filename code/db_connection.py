@@ -6,14 +6,17 @@ import ast
 
 
 class DBConnection:
-    mongo_info = 'mongodb://localhost:27017/'
-    db_name = 'verificacion'
+    #"mongodb://ian:secretPassword@123.45.67.89/cool_db"
+    mongo_info = 'mongodb://52.47.186.217:27017/'
+    db_name = 'admin'
     query_result = []
     indice = 0
 
     def __init__(self):
+        # self.client = MongoClient(
+            # self.mongo_info, serverSelectionTimeoutMS=5000)
         self.client = MongoClient(
-            self.mongo_info, serverSelectionTimeoutMS=5000)
+            "mongodb://root:123456@52.47.186.217/admin")
         self.db = self.client[self.db_name]
 
     def save_in_database(self, word, times):
