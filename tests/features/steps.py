@@ -15,8 +15,8 @@ def before_all():
 
     is_travis = 'TRAVIS' in os.environ
     if is_travis:
-        browser_nm = 'PhantomJS'
-        world.driver = getattr(webdriver, browser_nm)()
+        world.driver = webdriver.Firefox()
+        world.driver.get("http://localhost:8080/")
     else:
         world.driver = webdriver.Chrome('/usr/local/bin/chromedriver')
         world.driver.get("http://localhost:8080/")
