@@ -1,4 +1,4 @@
-#!/Users/seven/Downloads/verificacion/venv/bin/python
+#!/Users/seven/Downloads/final-master/venv/bin/python2.7
 # -*- coding: utf8 -*-
 # :Copyright: © 2015 Günter Milde.
 # :License: Released under the terms of the `2-Clause BSD license`_, in short:

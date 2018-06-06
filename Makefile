@@ -1,5 +1,5 @@
 init:
-	pip install -r requirements.txt
+	venv/bin/pip install -r requirements.txt
 	venv/bin/easy_install nose
 
 test:
@@ -8,3 +8,6 @@ test:
 coverage:
 	coverage run code/textAnalizer.py
 	coverage report -m
+
+run:
+	venv/bin/python code/application.py

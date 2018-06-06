@@ -1,4 +1,4 @@
-#!/Users/seven/Downloads/verificacion/venv/bin/python
+#!/Users/seven/Downloads/final-master/venv/bin/python2.7
 
 # Author: 
 # Contact: grubert@users.sf.net

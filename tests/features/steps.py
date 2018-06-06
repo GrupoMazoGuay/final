@@ -1,46 +1,54 @@
 from lettuce import *
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from code import application
 from nose.tools import assert_equals
+
+from application import app
 import os
+import pdb
+import time
+
 
 @before.all
 def before_all():
-    world.app = application.app.test_client()
+    world.app = app.test_client()
 
     is_travis = 'TRAVIS' in os.environ
     if is_travis:
         browser_nm = 'PhantomJS'
         world.driver = getattr(webdriver, browser_nm)()
     else:
-        world.driver = webdriver.Chrome()
+        world.driver = webdriver.Chrome('/usr/local/bin/chromedriver')
+        world.driver.get("http://localhost:8080/")
+
 
 @after.all
 def end(aux):
     world.driver.close()
     world.driver.quit()
 
+
 @step('I have the string "(.*)"')
-def i_have_the_string(step, string):
-    aux = None
+def have_the_string(step, string):
+    text = world.driver.find_element_by_name('text-box')
+    text.send_keys(string)
+    world.string = string
 
-@step('I have access to web http://127.0.0.1:8000/')
-def connect_to_web_page(step):
-    world.driver.implicitly_wait(10)
-    world.driver.get("http://localhost:8000/")
-    if not "Wordcount" in world.driver.title:
-        raise Exception("Unable to load page!")
 
-@step('I introduce string "(.*)" in the text box and press ENTER')
-def introduce_string_in_box(step, string):
-    world.driver.implicitly_wait(10)
-    login = world.driver.find_element_by_id('text-box')
-    login.send_keys(string)
-    login.send_keys(Keys.ENTER)
+@step('Push execute')
+def push_execute(step):
+    execute = world.driver.find_element_by_id('submit')
+    execute.send_keys("\n")
 
-@step('I see there are results')
-def check_results_are_correct(step):
+
+@step('Push reset')
+def push_reset(step):
+    reset = world.driver.find_element_by_id('reset')
+    reset.send_keys("\n")
+
+
+@step('I see results')
+def i_see_results(step):
     results = world.driver.find_elements_by_tag_name('td')
     if len(results) > 0:
         result_exists = True
@@ -48,42 +56,15 @@ def check_results_are_correct(step):
         result_exists = False
     assert_equals(result_exists, True)
 
-@step('I see there are no results')
-def check_there_are_no_results(step):
+
+@step('I see not results')
+def i_see_not_results(step):
+    reset = world.driver.find_element_by_id('reset')
+    reset.send_keys("\n")
+    time.sleep(1)
     results = world.driver.find_elements_by_tag_name('td')
-    if len(results) == 0:
-        no_result_exists = True
+    if len(results) > 0:
+        result_exists = True
     else:
-        no_result_exists = False
-    assert_equals(no_result_exists, True)
-
-@step('I introduce string "(.*)" in the text box and click Reset button')
-def click_reset_button_with_string_in_text_box(step, string):
-    reset = world.driver.find_element_by_id('text-box')
-    reset.send_keys(string)
-    reset = world.driver.find_element_by_id('reset')
-    reset.click()
-
-@step('I see the text-box is empty')
-def click_reset_button_with_empty_text_box(step):
-    result = world.driver.find_element_by_id('text-box').text
-    assert_equals(u'', result)
-
-@step('I click the Reset button')
-def click_reset_button(step):
-    reset = world.driver.find_element_by_id('reset')
-    reset.click()
-
-@step('I click the Submit button')
-def click_submit_button(step):
-    submit = world.driver.find_element_by_id('submit')
-    submit.click()
-
-@step('I see an error code')
-def check_an_error_code_is_shown(step):
-    error = world.driver.find_element_by_id('error')
-    if error:
-        error_exists = True
-    else:
-        error_exists = False
-    assert(error_exists)
+        result_exists = False
+    assert_equals(result_exists, False)
