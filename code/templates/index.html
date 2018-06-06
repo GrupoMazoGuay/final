@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wordcount</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style>
+        .container {
+            max-width: 1000px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5 col-sm-offset-1">
+            <h1>Text analyzer</h1>
+            <br>
+            <div class="error_container">
+                {% if error %}
+                <div class="alert alert-danger">
+                    <p  id="error">{{ error }}</p>
+                </div>
+                {% endif %}
+            </div>
+            <form role="form" method="POST" action="/">
+                <div class="form-group">
+                    <input type="text" name="text-box" class="form-control" id="text-box" value="https://gist.githubusercontent.com/jsdario/6d6c69398cb0c73111e49f1218960f79/raw/8d4fc4548d437e2a7203a5aeeace5477f598827d/el_quijote.txt"
+                           placeholder="Enter a .txt url (Max 300 char)" style="max-width: 300px;"
+                           maxlength="300">
+                </div>
+                <h4>Ejemplo: </h4>
+                <p> 
+                    https://gist.githubusercontent.com/jsdario/<br>
+                    6d6c69398cb0c73111e49f1218960f79/raw/<br>
+                    8d4fc4548d437e2a7203a5aeeace5477f598827d/el_quijote.txt
+                </p>
+                <button type="submit" id="submit" class="btn btn-default">Submit</button>
+
+            </form>
+            <form role="form" method="POST" action="/reset">
+                <button id="reset" class="btn btn-default">Reset</button>
+            </form>
+            <br><br><br>
+            <div class="Information">
+                <p>URL's válidas:</p>
+                <ul>
+                    <li><p>http://+[a-z_]+/+[a-z_]+.txt</p></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-5 col-sm-offset-1">
+            {% if results %}
+            <h2>Frequencies</h2>
+            <br>
+            <div id="results">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Word</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                </table>
+                <table class="table table-striped" style="height: 650px; overflow-y:scroll; display:block;">
+                    {% for result in results%}
+                    <tr>
+                        <td style=" width: 190px;">{{ result[0] }}</td>
+                        <td style=" width: 190px;">{{ result[1] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<br><br>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script>
+    $("#reset").click(function () {
+        $("#text-box").val('');
+    });
+</script>
+</body>
+</html>
