@@ -8,10 +8,10 @@ install:
 
 before_script:
   - "nohup python code/application.py &"
-  - "sleep 10"
+  - "sleep 5"
 
 script:
-  - make test
+  - "nosetests tests"
 
 after_success:
   - git checkout develop
