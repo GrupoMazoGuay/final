@@ -57,6 +57,44 @@ class DBConnection:
         else:
             return errno.EINVAL
 
+    def query(self):
+        result = self.db.verificacion.find({}, {'_id': False})
+        for x in result:
+            self.query_result.append(x)
+        self.indice = 0
+        return self.query_result
+
+    def next_result(self):
+        print self.indice
+        print len(self.query_result)
+        if self.indice < len(self.query_result):
+            return_value = self.query_result[self.indice]
+            self.indice += 1
+            return return_value
+        else:
+            return errno.ERANGE
+
+    def check_date_in_db(self, short_date, long_date):
+        if type(short_date) is str and type(long_date) is str:
+            element = self.db.verificacion.find(
+                {short_date + '.' + long_date: {"$exists": 'true'}}).count()
+            return element is not 0
+        else:
+            return errno.EINVAL
+
+    def get_data_from_database(self, short_date, long_date):
+        if type(short_date) is str and type(long_date) is str:
+            id = self.db.verificacion.find_one(
+                {short_date: {"$exists": 'true'}}).get('_id')
+            element = self.db.verificacion.find().sort({time: -1})
+            element = str(element[short_date][long_date])
+            element = ast.literal_eval(element)
+            print element
+            print type(element)
+            return element
+        else:
+            return errno.EINVAL
+
     def get_all_data_from_database(self):
         print "a"
         # db.verificacion.find().sort({time: -1})

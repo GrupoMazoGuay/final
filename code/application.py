@@ -29,13 +29,9 @@ def index():
 
         if (URL.endswith('.txt')):
             # parseo los datos y los subo
-            print "lalal"
             scrapper = Scrapper(URL)
-            print "lalal1"
             scrapper.get_data()
-            print "lalal2"
             scrapper.parse_data()
-            print "lala3"
 
             print scrapper.dictOfWords
 
@@ -71,4 +67,4 @@ def reset():
     return render_template('index.html', results=results, error=error)
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=8080)
+    app.run(host='0.0.0.0', port=8080)
