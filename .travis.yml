@@ -15,7 +15,7 @@ before_script:
 script:
   - "nosetests tests"
   # - "cd tests"
-  # - "lettuce"
+  ## - "lettuce"
 
 after_success:
   - git checkout develop
